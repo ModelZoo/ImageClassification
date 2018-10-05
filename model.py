@@ -10,7 +10,6 @@ class FashionMnistModel(BaseModel):
                                             kernel_initializer='random_uniform')
         self.pool1 = tf.keras.layers.MaxPool2D(padding='same')
         self.dropout2 = tf.keras.layers.Dropout(0.5)
-        
         self.conv2 = tf.keras.layers.Conv2D(32, (2, 2), padding='same', activation='relu',
                                             kernel_initializer='random_uniform')
         self.pool2 = tf.keras.layers.MaxPool2D(padding='same')
