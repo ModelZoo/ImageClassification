@@ -18,9 +18,11 @@ class Trainer(BaseTrainer):
         x_train, x_eval = x_train.reshape((-1, 28, 28, 1)), x_eval.reshape((-1, 28, 28, 1))
         x_train, x_eval = x_train.astype('float32') / 255.0, x_eval.astype('float32') / 255.0
         y_train, y_eval = y_train.astype('float32'), y_eval.astype('float32')
+        y_train = tf.keras.utils.to_categorical(y_train, 10)
+        y_eval = tf.keras.utils.to_categorical(y_eval, 10)
         train_data, eval_data = (x_train, y_train), (x_eval, y_eval)
         return train_data, eval_data
-        
+
 
 if __name__ == '__main__':
     Trainer().run()
