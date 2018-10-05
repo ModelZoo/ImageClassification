@@ -1,6 +1,6 @@
-# LinearRegression
+# ImageClassification
 
-Simple Linear Regression Model implemented by ModelZoo.
+Image Classification Model implemented by ModelZoo.
 
 
 ## Installation
@@ -13,7 +13,7 @@ pip3 install -r requirements.txt
 
 ## Dataset
 
-We use BostonHousing dataset for example.
+We use Fashion Mnist dataset for example.
 
 ## Usage
 
@@ -26,79 +26,26 @@ python3 train.py
 Outputs like this:
 
 ```
-Epoch 1/100
- 1/13 [=>............................] - ETA: 0s - loss: 816.1798
-13/13 [==============================] - 0s 4ms/step - loss: 457.9925 - val_loss: 343.2489
-
-Epoch 2/100
- 1/13 [=>............................] - ETA: 0s - loss: 361.5632
-13/13 [==============================] - 0s 3ms/step - loss: 274.7090 - val_loss: 206.7015
+Epoch 1/20
+1874/1875 [============================>.] - ETA: 0s - loss: 0.4318 - acc: 0.8427
+1875/1875 [==============================] - 80s 43ms/step - loss: 0.4318 - acc: 0.8427 - val_loss: 0.3753 - val_acc: 0.8644
+Epoch 2/20
+1873/1875 [============================>.] - ETA: 0s - loss: 0.3295 - acc: 0.8777
 Epoch 00002: saving model to checkpoints/model.ckpt
-
-Epoch 3/100
- 1/13 [=>............................] - ETA: 0s - loss: 163.5308
-13/13 [==============================] - 0s 3ms/step - loss: 172.4033 - val_loss: 128.0830
-
-Epoch 4/100
- 1/13 [=>............................] - ETA: 0s - loss: 115.4743
-13/13 [==============================] - 0s 3ms/step - loss: 112.6434 - val_loss: 85.0848
+1875/1875 [==============================] - 82s 44ms/step - loss: 0.3295 - acc: 0.8777 - val_loss: 0.3684 - val_acc: 0.8716
+Epoch 3/20
+1872/1875 [============================>.] - ETA: 0s - loss: 0.2982 - acc: 0.8887
+1875/1875 [==============================] - 70s 37ms/step - loss: 0.2984 - acc: 0.8887 - val_loss: 0.3563 - val_acc: 0.8726
+Epoch 4/20
+1873/1875 [============================>.] - ETA: 0s - loss: 0.2872 - acc: 0.8952
 Epoch 00004: saving model to checkpoints/model.ckpt
-
-Epoch 5/100
- 1/13 [=>............................] - ETA: 0s - loss: 149.8252
-13/13 [==============================] - 0s 3ms/step - loss: 77.0281 - val_loss: 57.9716
-....
-
-Epoch 42/100
- 7/13 [===============>..............] - ETA: 0s - loss: 20.5911
-13/13 [==============================] - 0s 8ms/step - loss: 22.4666 - val_loss: 23.7161
-Epoch 00042: saving model to checkpoints/model.ckpt
+1875/1875 [==============================] - 53s 28ms/step - loss: 0.2873 - acc: 0.8952 - val_loss: 0.3418 - val_acc: 0.8775
+Epoch 5/20
+1872/1875 [============================>.] - ETA: 0s - loss: 0.2679 - acc: 0.9000
+1875/1875 [==============================] - 61s 33ms/step - loss: 0.2678 - acc: 0.9000 - val_loss: 0.3331 - val_acc: 0.8831
 ```
 
-It runs only 42 epochs and stopped early, because there are no more good evaluation results for 20 epochs.
-
-When finished, we can find two folders generated named `checkpoints` and `events`.
-
-Go to `events` and run TensorBoard:
-
-```
-cd events
-tensorboard --logdir=.
-```
-
-TensorBoard like this:
-
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fvxrcajse2j31kw0hkgnf.jpg)
-
-There are training batch loss, epoch loss, eval loss.
-
-And also we can find checkpoints in `checkpoints` dir.
-
-It saved the best model named `model.ckpt` according to eval score, and it also saved checkpoints every 2 epochs.
-
-Next we can predict using existing checkpoints and `infer.py`.
-
-Now we've restored the specified model `model.ckpt-38` and prepared test data, outputs like this:
-
-```python
-[[ 9.637125 ]
- [21.368305 ]
- [20.898445 ]
- [33.832504 ]
- [25.756516 ]
- [21.264557 ]
- [29.069794 ]
- [24.968184 ]
- ...
- [36.027283 ]
- [39.06852  ]
- [25.728745 ]
- [41.62165  ]
- [34.340042 ]
- [24.821484 ]]
-```
-
-OK, we've finished restoring and predicting. Just so quickly.
+OK, we've finished training. Just so quickly.
 
 ## License
 
