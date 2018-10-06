@@ -47,6 +47,26 @@ Epoch 5/20
 
 OK, we've finished training. Just so quickly.
 
+## TensorBoard
+
+Go to `events` folder, and run TensorBoard:
+
+```
+cd events
+tensorboard --logdir=.
+```
+
+![](https://ws3.sinaimg.cn/large/006tNbRwgy1fvyhyl3daej31kw0rytcw.jpg)
+
+## Performance
+
+Here is the benchmark of implemented models:
+
+| Models | Eval Accuracy | Eval Loss |
+| ------ | ------------- | --------- |
+| FashionMnistModel | 0.8630 | 0.3945 |
+
+
 ## License
 
 MIT
