@@ -1,17 +1,13 @@
-from model import FashionMnistModel
 import tensorflow as tf
 from model_zoo.trainer import BaseTrainer
 from tensorflow.python.keras.datasets import fashion_mnist
 
 tf.flags.DEFINE_integer('epochs', 100, 'Max epochs')
 tf.flags.DEFINE_float('learning_rate', 0.01, 'Learning rate')
+tf.flags.DEFINE_string('model_class', 'FashionMnistModel', help='Model class name')
 
 
 class Trainer(BaseTrainer):
-    
-    def __init__(self):
-        BaseTrainer.__init__(self)
-        self.model_class = FashionMnistModel
     
     def prepare_data(self):
         (x_train, y_train), (_, _) = fashion_mnist.load_data()
