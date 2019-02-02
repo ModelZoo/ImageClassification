@@ -39,6 +39,9 @@ class BasicCNNModel(BaseModel):
 
 
 class VGG19Model(BaseModel):
+    """
+    This model gets no good results, deprecated.
+    """
     def __init__(self, config):
         super(VGG19Model, self).__init__(config)
         self.num_features = 64
