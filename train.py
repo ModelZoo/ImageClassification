@@ -5,7 +5,7 @@ from tensorflow.python.keras.datasets import fashion_mnist
 tf.flags.DEFINE_integer('epochs', 100, 'Max epochs')
 tf.flags.DEFINE_float('learning_rate', 0.01, 'Learning rate')
 tf.flags.DEFINE_string('model_class', 'VGG19Model', help='Model class name')
-
+tf.flags.DEFINE_string('checkpoint_name', 'model.ckpt', help='Model name')
 
 class Trainer(BaseTrainer):
     
