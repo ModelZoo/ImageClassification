@@ -13,8 +13,8 @@ class Trainer(BaseTrainer):
     def prepare_data(self):
         (x_train, y_train), (_, _) = fashion_mnist.load_data()
         x_train = x_train.reshape((-1, 28, 28, 1))
-        x_train, y_train = x_train.astype('float32') / 255.0, \
-                           tf.keras.utils.to_categorical(y_train.astype('float32'), 10)
+        x_train, y_train = x_train.astype('float16') / 255.0, \
+                           tf.keras.utils.to_categorical(y_train.astype('float16'), 10)
         (x_train, x_eval) = x_train[5000:], x_train[:5000]
         (y_train, y_eval) = y_train[5000:], y_train[:5000]
         train_data, eval_data = (x_train, y_train), (x_eval, y_eval)
