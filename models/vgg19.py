@@ -2,46 +2,11 @@ from model_zoo.model import BaseModel
 import tensorflow as tf
 
 
-class BasicCNNModel(BaseModel):
-    def __init__(self, config):
-        super(BasicCNNModel, self).__init__(config)
-        self.bn1 = tf.keras.layers.BatchNormalization()
-        self.conv1 = tf.keras.layers.Conv2D(32, (2, 2), padding='same', activation='relu',
-                                            kernel_initializer='random_uniform')
-        self.pool1 = tf.keras.layers.MaxPool2D(padding='same')
-        self.dropout1 = tf.keras.layers.Dropout(0.5)
-        self.conv2 = tf.keras.layers.Conv2D(32, (2, 2), padding='same', activation='relu',
-                                            kernel_initializer='random_uniform')
-        self.pool2 = tf.keras.layers.MaxPool2D(padding='same')
-        self.dropout2 = tf.keras.layers.Dropout(0.5)
-        self.flatten1 = tf.keras.layers.Flatten()
-        self.dense1 = tf.keras.layers.Dense(128, activation='relu', kernel_initializer='random_uniform')
-        self.dense2 = tf.keras.layers.Dense(10, activation='softmax')
-    
-    def call(self, inputs, training=None, mask=None):
-        o = self.bn1(inputs)
-        o = self.conv1(o)
-        o = self.pool1(o)
-        o = self.dropout1(o) if training else o
-        o = self.conv2(o)
-        o = self.pool2(o)
-        o = self.dropout2(o) if training else o
-        o = self.flatten1(o)
-        o = self.dense1(o)
-        o = self.dense2(o)
-        return o
-    
-    def optimizer(self):
-        return tf.train.AdamOptimizer(self.config.get('learning_rate'))
-    
-    def init(self):
-        self.compile(optimizer=self.optimizer(), loss='categorical_crossentropy', metrics=['accuracy'])
-
-
 class VGG19Model(BaseModel):
     """
     This model gets no good results, deprecated.
     """
+
     def __init__(self, config):
         super(VGG19Model, self).__init__(config)
         self.num_features = 64
@@ -53,7 +18,7 @@ class VGG19Model(BaseModel):
         self.bn1 = tf.keras.layers.BatchNormalization()
         self.pool1 = tf.keras.layers.MaxPool2D(pool_size=(2, 2), strides=(2, 2))
         self.drop1 = tf.keras.layers.Dropout(rate=0.5)
-        
+
         # layer2
         self.conv21 = tf.keras.layers.Conv2D(filters=2 * self.num_features, kernel_size=(3, 3), activation='relu',
                                              padding='same')
@@ -62,7 +27,7 @@ class VGG19Model(BaseModel):
         self.bn2 = tf.keras.layers.BatchNormalization()
         self.pool2 = tf.keras.layers.MaxPool2D(pool_size=(2, 2), strides=(2, 2))
         self.drop2 = tf.keras.layers.Dropout(rate=0.5)
-        
+
         # layer3
         self.conv31 = tf.keras.layers.Conv2D(filters=2 * 2 * self.num_features, kernel_size=(3, 3), activation='relu',
                                              padding='same')
@@ -73,7 +38,7 @@ class VGG19Model(BaseModel):
         self.bn3 = tf.keras.layers.BatchNormalization()
         self.pool3 = tf.keras.layers.MaxPool2D(pool_size=(2, 2), strides=(2, 2))
         self.drop3 = tf.keras.layers.Dropout(rate=0.5)
-        
+
         # layer4
         self.conv41 = tf.keras.layers.Conv2D(filters=2 * 2 * 2 * self.num_features, kernel_size=(3, 3),
                                              activation='relu',
@@ -87,7 +52,7 @@ class VGG19Model(BaseModel):
         self.bn4 = tf.keras.layers.BatchNormalization()
         self.pool4 = tf.keras.layers.MaxPool2D(pool_size=(2, 2), strides=(2, 2))
         self.drop4 = tf.keras.layers.Dropout(rate=0.5)
-        
+
         # layer5
         self.conv51 = tf.keras.layers.Conv2D(filters=2 * 2 * 2 * self.num_features, kernel_size=(3, 3),
                                              activation='relu',
@@ -101,10 +66,10 @@ class VGG19Model(BaseModel):
         self.bn5 = tf.keras.layers.BatchNormalization()
         self.pool5 = tf.keras.layers.MaxPool2D(pool_size=(2, 2), strides=(2, 2))
         self.drop5 = tf.keras.layers.Dropout(rate=0.5)
-        
+
         # flatten
         self.flatten = tf.keras.layers.Flatten()
-        
+
         # dense
         self.dense1 = tf.keras.layers.Dense(2 * 2 * 2 * self.num_features, activation='relu')
         self.drop5 = tf.keras.layers.Dropout(0.5)
@@ -112,9 +77,9 @@ class VGG19Model(BaseModel):
         self.drop6 = tf.keras.layers.Dropout(0.5)
         self.dense3 = tf.keras.layers.Dense(2 * self.num_features, activation='relu')
         self.drop7 = tf.keras.layers.Dropout(0.5)
-        
+
         self.dense4 = tf.keras.layers.Dense(10, activation='softmax')
-    
+
     def call(self, inputs, training=None, mask=None):
         # layer1
         x = self.conv11(inputs)
@@ -149,7 +114,7 @@ class VGG19Model(BaseModel):
         x = self.bn5(x, training=training)
         x = self.pool5(x)
         x = self.drop5(x, training=training)
-        
+
         # flatten
         x = self.flatten(x)
         # dense
@@ -161,9 +126,24 @@ class VGG19Model(BaseModel):
         x = self.drop7(x, training=training)
         x = self.dense4(x)
         return x
-    
-    def optimizer(self):
-        return tf.train.AdamOptimizer(self.config.get('learning_rate'))
-    
-    def init(self):
-        self.compile(optimizer=self.optimizer(), loss='categorical_crossentropy', metrics=['accuracy'])
+
+    def get_optimizer(self):
+        """
+        build optimizer
+        :return:
+        """
+        return tf.keras.optimizers.Adam(lr=self.config.get('learning_rate'))
+
+    def get_loss(self):
+        """
+        define loss
+        :return:
+        """
+        return 'categorical_crossentropy'
+
+    def get_metrics(self):
+        """
+        define metrics
+        :return:
+        """
+        return ['accuracy']

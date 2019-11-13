@@ -2,6 +2,6 @@
 
 cd ..
 python3 train.py\
-    --model_class BasicCNNModel\
-    --checkpoint_dir checkpoints/basic_cnn\
-    --tensor_board_dir events/basic_cnn
+    --model_class_name BasicCNNModel\
+    --checkpoint_dir checkpoints/basic\
+    --tensor_board_dir events/basic

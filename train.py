@@ -1,17 +1,25 @@
 import tensorflow as tf
 from model_zoo.trainer import BaseTrainer
-from tensorflow.python.keras.datasets import fashion_mnist
+from model_zoo import datasets
+from model_zoo import flags
 
-tf.flags.DEFINE_integer('epochs', 100, 'Max epochs')
-tf.flags.DEFINE_float('learning_rate', 0.01, 'Learning rate')
-tf.flags.DEFINE_string('model_class', 'VGG19Model', help='Model class name')
-tf.flags.DEFINE_string('checkpoint_name', 'model.ckpt', help='Model name')
+flags.DEFINE_integer('epochs', 100)
+flags.DEFINE_float('learning_rate', 0.01)
+flags.DEFINE_string('model_class_name', 'BasicCNNModel')
+flags.DEFINE_string('checkpoint_name', 'model.ckpt')
 
 
 class Trainer(BaseTrainer):
-    
+    """
+    Train Image Classification Model.
+    """
+
     def prepare_data(self):
-        (x_train, y_train), (_, _) = fashion_mnist.load_data()
+        """
+        Prepare fashion mnist data.
+        :return:
+        """
+        (x_train, y_train), (_, _) = datasets.fashion_mnist.load_data()
         x_train = x_train.reshape((-1, 28, 28, 1))
         x_train, y_train = x_train.astype('float16') / 255.0, \
                            tf.keras.utils.to_categorical(y_train.astype('float16'), 10)
