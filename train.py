@@ -3,7 +3,7 @@ from model_zoo.trainer import BaseTrainer
 from model_zoo import datasets
 from model_zoo import flags
 
-flags.DEFINE_integer('epochs', 100)
+flags.DEFINE_integer('epochs', 10000)
 flags.DEFINE_float('learning_rate', 0.01)
 flags.DEFINE_string('model_class_name', 'BasicCNNModel')
 flags.DEFINE_string('checkpoint_name', 'model.ckpt')
