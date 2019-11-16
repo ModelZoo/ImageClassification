@@ -14,7 +14,7 @@ class Trainer(BaseTrainer):
     Train Image Classification Model.
     """
 
-    def prepare_data(self):
+    def data(self):
         """
         Prepare fashion mnist data.
         :return:
